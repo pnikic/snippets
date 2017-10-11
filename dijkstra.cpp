@@ -2,7 +2,7 @@
 //
 // Calculates SSSP (single source shortest path) on a weighted graph.
 //
-// Variables
+// Variables:
 // - V, E are the number of vertices and edges of the graph
 // - s is the source
 // - AdjList is the adjacency list of the graph

@@ -2,7 +2,7 @@
 //
 // Gives a topological sorting on a DAG
 //
-// Variables
+// Variables:
 // - V, E are the number of vertices and edges of the graph
 // - AdjList is the adjacency list of the graph
 // - IND is a vector of in-degrees of the vertices 

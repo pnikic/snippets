@@ -56,7 +56,6 @@ struct UF
     }
 };
 
-
 void kruskal(viii& E, UF& uf, int& mst_cost)
 {
     sort(E.begin(), E.end());
