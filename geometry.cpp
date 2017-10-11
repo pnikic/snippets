@@ -6,11 +6,15 @@
 // - CH - Convex Hull
 //  
 // Functions:
-// - cutPolygon(A, B, CP) cuts the convex polygon CP with the line AB and returns the left half. Reverse the points to get the other polygon.
+// - cutPolygon(A, B, CP) cuts the convex polygon CP with the line AB and returns the left half.
+//   Reverse the points to get the other polygon.
 // - Area(P) returns the area of the polygon P.  
 // - InPolygon(P, A) returns true if the point A is in the polygon P. 
-// - circle2PtsRad(P1, P2, r, c) return true if there exists a circle with radius r through points P1 and P2 (sets c to be the center). To get the other center reverse P1 and P2.
-// - ConvexHull(P) return the convex hull of the points P (CCW order) with last point being equal to the first. If you want to include the points on the edge of the convex hull, change `<` to `<=`.
+// - circle2PtsRad(P1, P2, r, c) return true if there exists a circle with radius r through points
+//   P1 and P2 (sets c to be the center). To get the other center reverse P1 and P2.
+// - ConvexHull(P) return the convex hull of the points P (CCW order) with last point being equal
+//   to the first. If you want to include the points on the edge of the convex hull,
+//   change `<` to `<=`.
 //
 // Time complexities:
 // - cutPolygon: O(N)
