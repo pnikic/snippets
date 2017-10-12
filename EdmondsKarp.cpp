@@ -66,19 +66,9 @@ void process(int u, int v, int w)
 
 int main()
 {
-    V = 4;
-    
     memset(R, 0, sizeof(R));
     G.assign(V, vi());
-    // OBRISI
-    s = 0; t = 3;
-    process(0, 1, 100);
-    process(0, 2, 100);
-    process(1, 2, 1);
-    process(1, 3, 100);
-    process(2, 3, 50);
-    
-    //
+
     int MF = 0;
     while (AP())
     {
@@ -91,6 +81,4 @@ int main()
 
         MF += aug;
     }
-
-    cout << MF << endl;
 }
