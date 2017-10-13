@@ -50,5 +50,5 @@ int main()
         tie(w, x) = Q.top(); Q.pop();
         if (!T[x])
             maximin = min(maximin, w), p(Q, G, T, x);
-	}
+    }
 }
