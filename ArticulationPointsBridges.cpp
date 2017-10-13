@@ -42,7 +42,7 @@ int dfs(int x, int dad)
 			continue;
 		if (discovery[y] < 0)
 		{
-			++children;
+            ++children;
 			int w = dfs(y, x);
 			if (w >= discovery[x])
                 articulation[x] = true;
