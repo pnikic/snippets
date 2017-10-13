@@ -23,7 +23,7 @@
 //
 // Note: the code can be adjusted so that we look for a particular flow F.
 // Before updating MF in the MinCostMaxFlow function, check whether
-// it will exceed F then add just enough such that MF + aug = F. 
+// it will exceed F then add just enough such that MF + aug = F.
 
 #include <iostream>
 #include <vector>
@@ -86,12 +86,9 @@ int HasCycle()
         vi vis(V, 0);
         int x = s;
         vis[x] = true;
-        for (int i = 0; i < V; ++i)
+        for (int i = 0; i < V && x != -1; ++i)
         {
             x = P[x];
-            if (x == -1)
-                return -1;
-            
             if (vis[x])
                 return x;
             
