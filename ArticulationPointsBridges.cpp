@@ -45,7 +45,7 @@ int dfs(int x, int dad)
             ++children;
 			int w = dfs(y, x);
 			if (w >= discovery[x])
-                articulation[x] = true;
+				articulation[x] = true;
 			low = min(low, w);
 		}
 		else
@@ -58,11 +58,11 @@ int dfs(int x, int dad)
 
 int main()
 {
-    G.assign(N, vi());
-    discovery.assign(N, -1);
-    articulation.assign(N, 0);
-    tick = 1;
-    for (int i = 0; i < N; ++i)
-        if (discovery[i] == -1)
-            dfs(i, -1);
+	G.assign(N, vi());
+	discovery.assign(N, -1);
+	articulation.assign(N, 0);
+	tick = 1;
+	for (int i = 0; i < N; ++i)
+		if (discovery[i] == -1)
+			dfs(i, -1);
 }
