@@ -33,36 +33,36 @@ vvi G;
 
 int dfs(int x, int dad)
 {
-	int low = discovery[x] = ++tick;
+    int low = discovery[x] = ++tick;
     int children = articulation[x] = 0;
     
-	for (int y : G[x])
-	{
-		if (y == dad) 
-			continue;
-		if (discovery[y] < 0)
-		{
+    for (int y : G[x])
+    {
+        if (y == dad) 
+            continue;
+        if (discovery[y] < 0)
+        {
             ++children;
-			int w = dfs(y, x);
-			if (w >= discovery[x])
-				articulation[x] = true;
-			low = min(low, w);
-		}
-		else
-			low = min(low, discovery[y]);
-	}
-	if (dad == -1) articulation[x] = children > 1;
-	
-	return low;
+            int w = dfs(y, x);
+            if (w >= discovery[x])
+                articulation[x] = true;
+            low = min(low, w);
+        }
+        else
+            low = min(low, discovery[y]);
+    }
+    if (dad == -1) articulation[x] = children > 1;
+    
+    return low;
 }
 
 int main()
 {
-	G.assign(N, vi());
-	discovery.assign(N, -1);
-	articulation.assign(N, 0);
-	tick = 1;
-	for (int i = 0; i < N; ++i)
-		if (discovery[i] == -1)
-			dfs(i, -1);
+    G.assign(N, vi());
+    discovery.assign(N, -1);
+    articulation.assign(N, 0);
+    tick = 1;
+    for (int i = 0; i < N; ++i)
+        if (discovery[i] == -1)
+            dfs(i, -1);
 }
