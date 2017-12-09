@@ -1,3 +1,18 @@
+// Segment Tree
+//
+// Dynamic data structure used to answer dynamic range queries such as
+// RSQ (Range Sum Query), RMQ (Range Minimum Query) and others.
+// This implementation solves the RMQ problem given a set of N integers.
+//
+// Functions:
+// - rmq(i, j) returns the RMQ between on [i, j].
+// - update(i, v) updates the i-th element to the value v.
+//
+// Time complexities:
+// - build: O(N)
+// - rmq: O(log N)
+// - update: O(log N)
+
 #include <vector>
 using namespace std;
 
