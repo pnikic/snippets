@@ -5,44 +5,41 @@
 // Variables:
 // - Primes is a list of all primes less than a given bound
 // - IsPrime[x] is true if x is prime
-// - bound is the upper bound of primes
+// - maxn is the upper bound of primes
+// - p is the number of primes less than the upper bound
 //
 // Functions:
 // - Sieve(bound) stores all primes less than bound in Primes
 //
 // Time complexity: O(N(log(log N)))
 
-
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
 typedef long long ll;
-typedef vector<ll> vll;
 
-vll Primes, IsPrime;
+const ll maxn = 100000;
 
-void Sieve(ll bound)
+ll Prime[maxn], IsPrime[maxn], p;
+
+void Sieve()
 {
-    IsPrime.assign(bound, 1);
-    IsPrime[0] = IsPrime[1] = 0;
+    IsPrime[1] = IsPrime[1] = 1;
 
-    for (ll i = 2; i < bound; ++i)
+    for (ll i = 2; i < maxn; ++i)
     {
-        if (IsPrime[i])
+        if (!IsPrime[i])
         {
-            for (ll j = i * i; j < bound; j += i)
-                IsPrime[j] = 0;
+            for (ll j = i * i; j < maxn; j += i)
+                IsPrime[j] = 1;
 
-            Primes.push_back(i);
+            Prime[p++] = i;
         }
     }
 }
 
 int main()
 {
-    ll bound;
-    cin >> bound;
-    Sieve(bound);
+    Sieve();
 }
