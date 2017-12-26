@@ -64,18 +64,3 @@ void precompute()
     for (ll i = 1; i < maxn; ++i)
         f[i] = i * f[i - 1];
 }
-        
-int main()
-{
-    precompute();
-    for (int i = 0; i < 10; ++i)
-        cout << f[i] << endl;
-    
-    for (int i = 1; i < 10; ++i)
-    {
-        for (int j = 0; j <= i; ++ j)
-            cout << nCr(i, j) << ' ';
-        
-        cout << endl;
-    }
-}
