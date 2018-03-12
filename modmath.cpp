@@ -62,5 +62,5 @@ void precompute()
 {
     f[0] = 1;
     for (ll i = 1; i < maxn; ++i)
-        f[i] = i * f[i - 1];
+        f[i] = (i * f[i - 1]) % mod;
 }
