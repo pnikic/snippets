@@ -6,6 +6,11 @@
 // - CH - Convex Hull
 //  
 // Functions:
+// - cross(a, o, b) returns (oa x ob). 
+// - distToSeg(A, B, p, r) returns the distance from point p to segment AB. Sets r to be the
+//   closest point on the segment to p.
+// - dist(a, b) returns the distance between points a and b.
+// - distToLine(A, B, p) returns the distance from point p to line AB.
 // - cutPolygon(A, B, CP) cuts the convex polygon CP with the line AB and returns the left half.
 //   Reverse the points to get the other polygon.
 // - Area(P) returns the area of the polygon P.  
@@ -14,7 +19,7 @@
 //   P1 and P2 (sets c to be the center). To get the other center reverse P1 and P2.
 // - ConvexHull(P) return the convex hull of the points P (CCW order) with last point being equal
 //   to the first. If you want to include the points on the edge of the convex hull,
-//   change `<` to `<=`.
+//   change `<=` to `<`.
 //
 // Time complexities:
 // - cutPolygon: O(N)
@@ -37,20 +42,13 @@ struct point
     double x, y;
     point() {}
     point(double x, double y) : x(x), y(y) {}
-    point operator -(point& a) {return point(x - a.x, y - a.y);}
-    bool operator == (point& b) const {return x == b.x && y == b.y;}
     bool operator < (point& b) {return x < b.x || (x == b.x && y < b.y);}
     friend istream& operator >>(istream& in, point& p) {return in >> p.x >> p.y;}
 };
 
-double cross(point a, point b, point o)
+double cross(point a, point o, point b)
 {
     return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
-}
-
-bool ccw(point p, point q, point r)
-{
-    return cross(q, r, p) > 0;
 }
 
 double dot(point a, point b)
@@ -58,14 +56,34 @@ double dot(point a, point b)
     return a.x * b.x + a.y * b.y;
 }
 
-double snorm(point a)
+double angle(point a, point o, point b)
 {
-    return a.x * a.x + a.y * a.y;
+    point a_p = point(a.x - o.x, a.y - o.y), b_p = point(b.x - o.x, b.y - o.y);
+    return acos(dot(a_p, b_p) / sqrt(dot(a_p, a_p) * dot(b_p, b_p)));
 }
 
-double angle(point a, point b, point o)
+double dist(point a, point b)
 {
-    return acos(dot(a - o, b - o) / sqrt(snorm(a - o) * snorm(b - o)));
+    return hypot(a.x - b.x, a.y - b.y);
+}
+
+double distToSeg(point A, point B, point p, point& r)
+{
+    point M = p;
+    M.x -= A.x, M.y -= A.y;
+    B.x -= A.x, B.y -= A.y;
+    double lambda = max(0.0, min(dot(M, B) / dot(B, B), 1.0));
+    r.x = lambda * B.x + A.x;
+    r.y = lambda * B.y + A.y;
+    return dist(r, p);
+}
+
+double distToLine(point A, point B, point p)
+{
+    double a = B.y - A.y;
+    double b = A.x - B.x;
+    double c = B.x * A.y - A.x * B.y;
+    return abs(a * p.x + b * p.y + c) / hypot(a, b);
 }
 
 point lineIntersectSeg(point& p, point& q, point& A, point& B)
@@ -73,8 +91,8 @@ point lineIntersectSeg(point& p, point& q, point& A, point& B)
     double a = B.y - A.y;
     double b = A.x - B.x;
     double c = B.x * A.y - A.x * B.y;
-    double u = fabs(a * p.x + b * p.y + c);
-    double v = fabs(a * q.x + b * q.y + c);
+    double u = abs(a * p.x + b * p.y + c);
+    double v = abs(a * q.x + b * q.y + c);
     return point((p.x * v + q.x * u) / (u + v), (p.y * v + q.y * u) / (u + v));
 }
 
@@ -86,12 +104,17 @@ vector<point> cutPolygon(point& a, point& b, vector<point>& Q)
         double left1 = cross(b, Q[i], a), left2 = 0;
         if (i != Q.size() - 1) 
             left2 = cross(b, Q[i + 1], a);
-        if (left1 > -eps) P.push_back(Q[i]);
+        
+        if (left1 > -eps)
+            P.push_back(Q[i]);
+        
         if (left1 * left2 < -eps)
             P.push_back(lineIntersectSeg(Q[i], Q[i + 1], a, b));
     }
-    if (!P.empty() && !(P.back() == P.front()))
+    
+    if (!P.empty() && !(P.back().x == P.front().x && P.back().y == P.front().y))
         P.push_back(P.front());
+    
     return P;
 }
 
@@ -106,7 +129,8 @@ double Area(vector<point>& P)
         double y1 = P[i].y, y2 = P[i + 1].y;
         A += (x1 * y2 - x2 * y1);
     }
-    return 0.5 * fabs(A);
+    
+    return 0.5 * abs(A);
 }
 
 bool circle2PtsRad(const point& p1, const point& p2, double r, point &c)
@@ -129,34 +153,34 @@ bool InPolygon(point& p, const vector<point>& P)
     double sum = 0;
     for (int i = 0; i < P.size() - 1; ++i)
     {
-        if (ccw(p, P[i], P[i + 1]))
+        if (cross(P[i], p, P[i + 1]) > 0)
             sum += angle(P[i], p, P[i + 1]);
         else
             sum -= angle(P[i], p, P[i + 1]);
     }
-    return fabs(fabs(sum) - 2 * M_PI) < eps;
+    
+    return abs(abs(sum) - 2 * M_PI) < eps;
 }
 
 vector<point> ConvexHull(vector<point>& P)
 {
-    int n = P.size(), k = 0;
     sort(P.begin(), P.end());
-    vector<point> H(2 * n);
-    for (int i = 0; i < n; ++i)
+    vector<point> H;
+    for (int i = 0; i < 2; ++i)
     {
-        while (k >= 2 && cross(H[k - 2], H[k - 1], P[i]) < 0)
-            k--;
-        H[k++] = P[i];
+        int s = H.size();
+        for (point p : P)
+        {
+            while (H.size() >= s + 2 && cross(H[H.size() - 2], H[H.size() - 1], p) <= 0)
+                H.pop_back();
+            
+            H.push_back(p);
+        }
+        
+        if (!i) H.pop_back();
+        reverse(P.begin(), P.end());
     }
     
-    for (int i = n - 2, t = k + 1; i >= 0; --i)
-    {
-        while (k >= t && cross(H[k - 2], H[k - 1], P[i]) < 0)
-            k--;
-        H[k++] = P[i];
-    }
-    
-    H.resize(k - 1);
     return H;
 }
 
