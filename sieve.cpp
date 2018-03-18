@@ -3,43 +3,74 @@
 // Computes all primes less than a given bound
 //
 // Variables:
-// - Primes is a list of all primes less than a given bound
-// - IsPrime[x] is true if x is prime
+// - P is a list of all primes less than a given bound
 // - maxn is the upper bound of primes
-// - p is the number of primes less than the upper bound
+// - n is the number of primes less than the upper bound
+// - maxN ~ number of primes less than maxn
 //
 // Functions:
-// - Sieve(bound) stores all primes less than bound in Primes
+// - SimpleSieve() stores all primes less than sqrt(maxn)
+// - SegSieve() stores all primes less than maxn
 //
 // Time complexity: O(N(log(log N)))
+// Space complexity:
+// - O(N / log(N)) - if all primes are stored
+// - O(sqrt(N)) - if only first sqrt(N) primes are stored
 
 #include <iostream>
+#include <cstring>
+#include <cmath>
 
 using namespace std;
 
 typedef long long ll;
 
-const ll maxn = 100000;
+const ll maxN = 60000000;
+const ll maxn = 100000000;
+const ll fn = ll(sqrt(maxn)) + 2;
 
-ll Prime[maxn], IsPrime[maxn], p;
+ll Prime[fn], IsPrime[fn], p, n, P[maxN];
 
-void Sieve()
+void SimpleSieve()
 {
     IsPrime[1] = IsPrime[1] = 1;
 
-    for (ll i = 2; i < maxn; ++i)
+    for (ll i = 2; i < fn; ++i)
     {
         if (!IsPrime[i])
         {
-            for (ll j = i * i; j < maxn; j += i)
+            for (ll j = i * i; j < fn; j += i)
                 IsPrime[j] = 1;
 
-            Prime[p++] = i;
+            P[n++] = Prime[p++] = i;
         }
     }
 }
 
-int main()
+void SegSieve()
 {
-    Sieve();
+    SimpleSieve();
+    ll lo = fn, hi = 2 * fn;
+    while (lo < maxn)
+    {
+        if (hi >= maxn)
+            hi = maxn;
+
+        memset(IsPrime, 0, sizeof(IsPrime));
+        for (ll i = 0; i < p; ++i)
+        {
+            int lolim = ll(lo / Prime[i]) * Prime[i];
+            if (lolim < lo)
+                lo += Prime[i];
+
+            for (ll j = lolim; j < hi; j += Prime[i])
+                IsPrime[j - lo] = 0;
+        }
+
+        for (ll i = lo; i < hi; ++i)
+            if (IsPrime[i - lo])
+                P[n++] = i;
+                
+        lo += fn, hi += fn;
+    }
 }
