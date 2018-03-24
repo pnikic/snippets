@@ -19,7 +19,7 @@
 
 #include <iostream>
 #include <cstring>
-#include <cmath>
+#include <ctgmath>
 
 using namespace std;
 
@@ -27,7 +27,7 @@ typedef long long ll;
 
 const ll maxN = 60000000;
 const ll maxn = 100000000;
-const ll fn = ll(sqrt(maxn)) + 2;
+const ll fn = ll(sqrtl(maxn)) + 2;
 
 ll Prime[fn], IsPrime[fn], p, n, P[maxN];
 
@@ -61,14 +61,14 @@ void SegSieve()
         {
             int lolim = ll(lo / Prime[i]) * Prime[i];
             if (lolim < lo)
-                lo += Prime[i];
+                lolim += Prime[i];
 
             for (ll j = lolim; j < hi; j += Prime[i])
-                IsPrime[j - lo] = 0;
+                IsPrime[j - lo] = 1;
         }
 
         for (ll i = lo; i < hi; ++i)
-            if (IsPrime[i - lo])
+            if (!IsPrime[i - lo])
                 P[n++] = i;
                 
         lo += fn, hi += fn;

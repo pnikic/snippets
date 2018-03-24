@@ -35,7 +35,7 @@
 
 using namespace std;
 
-#define eps 1e-9
+#define eps 1e-6
 
 struct point
 {
