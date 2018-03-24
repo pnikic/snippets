@@ -7,15 +7,15 @@
 //  
 // Functions:
 // - cross(a, o, b) returns (oa x ob). 
-// - distToSeg(A, B, p, r) returns the distance from point p to segment AB. Sets r to be the
+// - DistToSeg(A, B, p, r) returns the distance from point p to segment AB. Sets r to be the
 //   closest point on the segment to p.
 // - dist(a, b) returns the distance between points a and b.
-// - distToLine(A, B, p) returns the distance from point p to line AB.
-// - cutPolygon(A, B, CP) cuts the convex polygon CP with the line AB and returns the left half.
+// - DistToLine(A, B, p) returns the distance from point p to line AB.
+// - CutPolygon(A, B, CP) cuts the convex polygon CP with the line AB and returns the left half.
 //   Reverse the points to get the other polygon.
 // - Area(P) returns the area of the polygon P.  
 // - InPolygon(P, A) returns true if the point A is in the polygon P. 
-// - circle2PtsRad(P1, P2, r, c) return true if there exists a circle with radius r through points
+// - Circle2PtsRad(P1, P2, r, c) return true if there exists a circle with radius r through points
 //   P1 and P2 (sets c to be the center). To get the other center reverse P1 and P2.
 // - ConvexHull(P) return the convex hull of the points P (CCW order) with last point being equal
 //   to the first. If you want to include the points on the edge of the convex hull,
@@ -67,7 +67,7 @@ double dist(point a, point b)
     return hypot(a.x - b.x, a.y - b.y);
 }
 
-double distToSeg(point A, point B, point p, point& r)
+double DistToSeg(point A, point B, point p, point& r)
 {
     point M = p;
     M.x -= A.x, M.y -= A.y;
@@ -78,7 +78,7 @@ double distToSeg(point A, point B, point p, point& r)
     return dist(r, p);
 }
 
-double distToLine(point A, point B, point p)
+double DistToLine(point A, point B, point p)
 {
     double a = B.y - A.y;
     double b = A.x - B.x;
@@ -86,7 +86,7 @@ double distToLine(point A, point B, point p)
     return abs(a * p.x + b * p.y + c) / hypot(a, b);
 }
 
-point lineIntersectSeg(point& p, point& q, point& A, point& B)
+point LineIntersectSeg(point& p, point& q, point& A, point& B)
 {
     double a = B.y - A.y;
     double b = A.x - B.x;
@@ -96,7 +96,7 @@ point lineIntersectSeg(point& p, point& q, point& A, point& B)
     return point((p.x * v + q.x * u) / (u + v), (p.y * v + q.y * u) / (u + v));
 }
 
-vector<point> cutPolygon(point& a, point& b, vector<point>& Q)
+vector<point> CutPolygon(point& a, point& b, vector<point>& Q)
 {
     vector<point> P;
     for (int i = 0; i < Q.size(); ++i)
@@ -109,7 +109,7 @@ vector<point> cutPolygon(point& a, point& b, vector<point>& Q)
             P.push_back(Q[i]);
         
         if (left1 * left2 < -eps)
-            P.push_back(lineIntersectSeg(Q[i], Q[i + 1], a, b));
+            P.push_back(LineIntersectSeg(Q[i], Q[i + 1], a, b));
     }
     
     if (!P.empty() && !(P.back().x == P.front().x && P.back().y == P.front().y))
@@ -133,7 +133,7 @@ double Area(vector<point>& P)
     return 0.5 * abs(A);
 }
 
-bool circle2PtsRad(const point& p1, const point& p2, double r, point &c)
+bool Circle2PtsRad(const point& p1, const point& p2, double r, point &c)
 {
     double d2 = (p1.x - p2.x) * (p1.x - p2.x)
               + (p1.y - p2.y) * (p1.y - p2.y);
@@ -182,15 +182,4 @@ vector<point> ConvexHull(vector<point>& P)
     }
     
     return H;
-}
-
-int main()
-{
-    int n;
-    cin >> n;
-    vector<point> P(n);
-    for (int i = 0; i < n; ++i)
-        cin >> P[i];
-
-    ConvexHull(P);
 }
