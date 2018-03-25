@@ -9,7 +9,7 @@
 \begin{align*}
     \tau{(n)} &= (\alpha_{1} + 1) (\alpha_{2} + 1) \cdots (\alpha_{k} + 1)\\
     \sigma{(n)} &= \displaystyle\prod_{i = 1} ^k \frac{p_i^{\alpha_i + 1} - 1}{p_i - 1}\\
-    \varphi{(n)} &= n \displaystylq\prod_{i = 1} ^k (1 - \frac{1}{p_i})
+    \varphi{(n)} &= n \displaystyle\prod_{i = 1} ^k (1 - \frac{1}{p_i})
 \end{align*}
 
 Neka $a x \equiv a y\ (\textrm{mod } n)$ . Tada $x \equiv y\ (\textrm{mod}\ \frac{n}{gcd(a, n)})$ .
@@ -41,15 +41,11 @@ Pitagorine trojke: $[d(u^2 - v^2)]^2+(2duv)^2=[d(u^2+v^2)]^2$
     (x+y)^n=\sum_{k=0}^n\binom{n}{k}x^{n-k}y^k
 \end{gather*}
 *Vandermondeova konvolucija*
-
-
 \begin{gather*}
     \displaystyle\sum_{k=0}^r\binom{n}{k}\binom{m}{r-k}=\binom{m+n}{r} \ \ \ 
     \displaystyle\sum_{k=0}^n\binom{n}{k}\binom{m}{k}=\binom{m+n}{n} \ \ \
     \displaystyle\sum_{k=0}^n\binom{n^2}{k}=\binom{2n}{n}
 \end{gather*}
-
-
 
 
 
