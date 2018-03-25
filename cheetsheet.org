@@ -1,0 +1,60 @@
+* Teorija brojeva
+
+#+BEGIN_SRC C
+  int GCD(int a, int b)
+  {
+      return b == 0? a : GCD(b, a % b);
+  }
+#+END_SRC 
+\begin{align*}
+    \tau{(n)} &= (\alpha_{1} + 1) (\alpha_{2} + 1) \cdots (\alpha_{k} + 1)\\
+    \sigma{(n)} &= \displaystyle\prod_{i = 1} ^k \frac{p_i^{\alpha_i + 1} - 1}{p_i - 1}\\
+    \varphi{(n)} &= n \displaystylq\prod_{i = 1} ^k (1 - \frac{1}{p_i})
+\end{align*}
+
+Neka $a x \equiv a y\ (\textrm{mod } n)$ . Tada $x \equiv y\ (\textrm{mod}\ \frac{n}{gcd(a, n)})$ .
+Ako  $gcd(a, n) = 1$ tada rješenje od $a x \equiv b\ (\textrm{mod } n)$ dano s $x = k b$ pri čemu je
+$k$ rješenje iz $a k + n l = 1$.\\
+(*Wilson*) $(p - 1)! \equiv -1\ (\textrm{mod } p)$ ako i samo ako $p$ prost.\\
+(*Kineski teorem o ostacima*) Ako $gcd(n_i, n_j) = 1$ za $i \neq j$, tada je  rješenje za sustav:
+\begin{align*}
+    x \equiv\ & a_1 \(\textrm{mod } n_k\\
+    &\vdots\\
+    x \equiv\ & a_k \(\textrm{mod } n_k
+\end{align*}
+dano s: $x = \displaystyle\sum_{i = 1}^k a_iM_in_i$    pri čemu $M_iN_i+m_in_i=1$ te $N_i=\frac{N}{n_i}$ , 
+$N=\displaystyle\prod_{i=1}^kn_i$. (*Eulerov teorem*) $gcd(a, n) = 1$ tada $a^{\varphi(n)} \equiv 1 \ (\textrm{mod } n)$. Za $p$ prost, 
+$\varphi(p) = p - 1$. Posljedično $a^b \equiv a ^{b\ \textrm{mod} \ \varphi(n)} \ (\textrm{mod } n)$ 
+
+Pitagorine trojke: $[d(u^2 - v^2)]^2+(2duv)^2=[d(u^2+v^2)]^2$  
+
+* Kombinatorika
+*Binomni koeficijent* pravila:
+\begin{gather*}
+    \binom{n}{k} = \binom{n}{n - k} \ \ \ \binom{n}{k} = \frac{n}{k} \ \ \ \binom{n - 1}{k - 1}
+    \binom{n}{k} = \binom{n}{k - 1} + \binom{n - 1}{k - 1} \\
+    \binom{n}{r} \binom{r}{k} = \binom{n}{k} \binom{n - k}{r - k} \ \ \ k \binom{n}{k} = n \binom{n - 1}{k - 1} \\
+    \displaystyle\sum_{k=0}^r\binom{n+k}{k}=\binom{n+r+1}{r} \ \ \ \displaystyle\sum_{j=0}^{n-k}\binom{k+j}{k}=\binom{n+1}{k+1} \\
+\end{gather*}
+*Multinomni teorem:*
+\begin{gather*}
+    (x+y)^n=\sum_{k=0}^n\binom{n}{k}x^{n-k}y^k
+\end{gather*}
+*Vandermondeova konvolucija*
+
+
+\begin{gather*}
+    \displaystyle\sum_{k=0}^r\binom{n}{k}\binom{m}{r-k}=\binom{m+n}{r} \ \ \ 
+    \displaystyle\sum_{k=0}^n\binom{n}{k}\binom{m}{k}=\binom{m+n}{n} \ \ \
+    \displaystyle\sum_{k=0}^n\binom{n^2}{k}=\binom{2n}{n}
+\end{gather*}
+
+
+
+
+
+
+
+        
+
+
