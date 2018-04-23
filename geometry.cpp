@@ -101,9 +101,9 @@ vector<point> CutPolygon(point& a, point& b, vector<point>& Q)
     vector<point> P;
     for (int i = 0; i < Q.size(); ++i)
     {
-        double left1 = cross(b, Q[i], a), left2 = 0;
-        if (i != Q.size() - 1) 
-            left2 = cross(b, Q[i + 1], a);
+        double left1 = cross(a, Q[i], b), left2 = 0;
+        if (i + 1 != Q.size()) 
+            left2 = cross(a, Q[i + 1], b);
         
         if (left1 > -eps)
             P.push_back(Q[i]);
