@@ -29,18 +29,16 @@ const ll maxN = 60000000;
 const ll maxn = 100000000;
 const ll fn = ll(sqrtl(maxn)) + 2;
 
-ll Prime[fn], IsPrime[fn], p, n, P[maxN];
+ll Prime[fn], IsNotPrime[fn], p, n, P[maxN];
 
 void SimpleSieve()
 {
-    IsPrime[1] = IsPrime[1] = 1;
-
     for (ll i = 2; i < fn; ++i)
     {
-        if (!IsPrime[i])
+        if (!IsNotPrime[i])
         {
             for (ll j = i * i; j < fn; j += i)
-                IsPrime[j] = 1;
+                IsNotPrime[j] = 1;
 
             P[n++] = Prime[p++] = i;
         }
@@ -56,7 +54,7 @@ void SegSieve()
         if (hi >= maxn)
             hi = maxn;
 
-        memset(IsPrime, 0, sizeof(IsPrime));
+        memset(IsNotPrime, 0, sizeof(IsNotPrime));
         for (ll i = 0; i < p; ++i)
         {
             int lolim = ll(lo / Prime[i]) * Prime[i];
@@ -64,11 +62,11 @@ void SegSieve()
                 lolim += Prime[i];
 
             for (ll j = lolim; j < hi; j += Prime[i])
-                IsPrime[j - lo] = 1;
+                IsNotPrime[j - lo] = 1;
         }
 
         for (ll i = lo; i < hi; ++i)
-            if (!IsPrime[i - lo])
+            if (!IsNotPrime[i - lo])
                 P[n++] = i;
                 
         lo += fn, hi += fn;
