@@ -16,11 +16,7 @@ Neka $a x \equiv a y\ (\textrm{mod } n)$ . Tada $x \equiv y\ (\textrm{mod}\ \fra
 Ako  $gcd(a, n) = 1$ tada rješenje od $a x \equiv b\ (\textrm{mod } n)$ dano s $x = k b$ pri čemu je
 $k$ rješenje iz $a k + n l = 1$.\\
 (*Wilson*) $(p - 1)! \equiv -1\ (\textrm{mod } p)$ ako i samo ako $p$ prost.\\
-(*Kineski teorem o ostacima*) Ako $gcd(n_i, n_j) = 1$ za $i \neq j$, tada je  rješenje za sustav:
-\begin{align*}
-    x \equiv\ & a_1 \(\textrm{mod } n_k\\
-    &\vdots\\
-    x \equiv\ & a_k \(\textrm{mod } n_k
+(*Kineski teorem o ostacima*) Ako b(\textrm{mod } n_k
 \end{align*}
 dano s: $x = \displaystyle\sum_{i = 1}^k a_iM_in_i$    pri čemu $M_iN_i+m_in_i=1$ te $N_i=\frac{N}{n_i}$ , 
 $N=\displaystyle\prod_{i=1}^kn_i$. (*Eulerov teorem*) $gcd(a, n) = 1$ tada $a^{\varphi(n)} \equiv 1 \ (\textrm{mod } n)$. Za $p$ prost, 

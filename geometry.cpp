@@ -171,7 +171,7 @@ vector<point> ConvexHull(vector<point>& P)
         int s = H.size();
         for (point p : P)
         {
-            while (H.size() >= s + 2 && cross(H[H.size() - 2], H[H.size() - 1], p) <= 0)
+            while (H.size() >= s + 2 && cross(H[H.size() - 1], H[H.size() - 2], p) <= 0)
                 H.pop_back();
             
             H.push_back(p);
