@@ -5,7 +5,7 @@
 // This implementation solves the RMQ problem given a set of N integers.
 //
 // Functions:
-// - rmq(i, j) returns the RMQ between on [i, j].
+// - rmq(i, j) returns the RMQ on [i, j].
 // - update(i, v) updates the i-th element to the value v.
 //
 // Time complexities:
