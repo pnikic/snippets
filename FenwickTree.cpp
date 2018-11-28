@@ -29,7 +29,6 @@ class FenwickTree
 private:
     vector<T> ft;
 public:
-    FenwickTree () {}
     FenwickTree (int n) : ft(n + 1)
     {
     }
