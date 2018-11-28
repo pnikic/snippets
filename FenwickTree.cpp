@@ -61,7 +61,7 @@ class RangeFT
 private:
     FenwickTree<T> mul, add;
 public:
-    RangeFT (int n) : mul(FenwickTree<T>(n)), add(FenwickTree<T>(n))
+    RangeFT (int n) : mul(n), add(n)
     {
     }
     T rsq(int a)
