@@ -27,7 +27,7 @@ vi P;
 
 int dfs(deque<int> &D, int u)
 {
-    P[v] = 1;
+    P[u] = 1;
     for (int v : G[u])
         if (!P[v])
             dfs(D, v);
