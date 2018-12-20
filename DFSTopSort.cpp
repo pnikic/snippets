@@ -27,9 +27,10 @@ vi P;
 
 int dfs(deque<int> &D, int u)
 {
+    P[u] = 1;
     for (int v : G[u])
         if (!P[v])
-            P[v] = 1, dfs(D, v);
+            dfs(D, v);
 
     D.push_front(u);
 }
