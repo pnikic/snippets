@@ -26,7 +26,6 @@ using namespace std;
 template <class T>
 class FenwickTree
 {
-private:
     vector<T> ft;
 public:
     FenwickTree (int n) : ft(n + 1)
