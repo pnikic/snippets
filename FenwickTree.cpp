@@ -40,7 +40,7 @@ public:
     }
     T rsq(int a, int b)
     {
-        return rsq(b) - rsq(a);
+        return rsq(b) - rsq(a - 1);
     }
     T q(int x)
     {
