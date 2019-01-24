@@ -28,12 +28,12 @@ struct UF
     {
         iota(p.begin(), p.end(), 0);
     }
-	
+
     int f(int x)
     {
         return (p[x] == x ? x : p[x] = f(p[x]));
     }
-	
+
     void u(int i, int j)
     {
         int x = f(i), y = f(j);
@@ -65,7 +65,7 @@ void kruskal(viii& E, UF& uf, int& mst_cost)
         tie(w, a, b) = t;
         if (!uf.s(a, b))
             mst_cost += w, uf.u(a, b);
-    }	
+    }
 }
 
 int main()
@@ -79,7 +79,7 @@ int main()
         cin >> u >> v >> w;
         EdgeList.emplace_back(w, u, v);
     }
-    
+
     int mst_cost = 0;
     kruskal(EdgeList, uf, mst_cost);
 }
