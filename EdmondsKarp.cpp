@@ -32,7 +32,7 @@ using namespace std;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 
-const int MAX = 10000;
+const int MAX = 5000;
 
 int R[MAX][MAX], V, E, s, t;
 vvi G;
@@ -61,7 +61,7 @@ void process(int u, int v, int w)
 {
     G[u].push_back(v);
     G[v].push_back(u);
-    R[u][v] = w; 
+    R[u][v] = w;
 }
 
 int main()
