@@ -26,7 +26,6 @@ using namespace std;
 template <class T>
 class FenwickTree
 {
-private:
     vector<T> ft;
 public:
     FenwickTree (int n) : ft(n + 1)
@@ -41,7 +40,7 @@ public:
     }
     T rsq(int a, int b)
     {
-        return rsq(b) - rsq(a);
+        return rsq(b) - rsq(a - 1);
     }
     T q(int x)
     {
