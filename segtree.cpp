@@ -5,87 +5,38 @@
 // This implementation solves the RMQ problem given a set of N integers.
 //
 // Functions:
-// - rmq(i, j) returns the RMQ on [i, j].
+// - query(i, j) returns the RMQ on [i, j].
 // - update(i, v) updates the i-th element to the value v.
 //
 // Time complexities:
 // - build: O(N)
-// - rmq: O(log N)
+// - query: O(log N)
 // - update: O(log N)
+const int MAXN = 1 << 18; // 2.6e5
+int N = 200000;
+int seg[2 * MAXN]; // root is seg[1]
 
-#include <vector>
-using namespace std;
-
-typedef vector<int> vi;
-
-class segtree
+void build()
 {
-    vi& A;
-    vi st;
-    int n;
-public:
-    segtree(vi& A) : A(A), n(A.size())
+    for (int i = N - 1; i >= 0; i--)
+        seg[i] = seg[i << 1] + seg[i << 1 | 1];
+}
+
+void update(int p, int val)
+{
+    for (seg[p += N] = val; p > 0; p >>= 1)
+        seg[p >> 1] = seg[p] + seg[p ^ 1];
+}
+
+int query(int l, int r) // [l, r]
+{
+    int res = 0;
+    for (l += N, r += N; l <= r; l >>= 1, r >>= 1)
     {
-        st.assign(4 * n, 0);
-        build(1, 0, n - 1);
+        if (l & 1)
+            res += seg[l++];
+        if (!(r & 1))
+            res += seg[r--];
     }
-
-    int rmq(int i, int j)
-    {
-        return rmq(1, 0, n - 1, i, j);
-    }
-
-    void update(int i, int v)
-    {
-        A[i] = v;
-        update(1, 0, n - 1, i);
-    }
-
-private:
-    int left(int p)
-    {
-        return p << 1;
-    }
-
-    int right(int p)
-    {
-        return (p << 1) + 1;
-    }
-
-    void build(int p, int L, int R)
-    {
-        if (L == R)
-            st[p] = L;
-        else
-        {
-            build(left(p), L, (L + R) / 2);
-            build(right(p), (L + R) / 2 + 1, R);
-            int p1 = st[left(p)], p2 = st[right(p)];
-            st[p] = (A[p1] <= A[p2]) ? p1 : p2;
-        }
-    }
-
-    int rmq(int p, int L, int R, int i, int j)
-    {
-        if (i > R || j < L) return -1;
-        if (L >= i && R <= j) return st[p];
-
-        int p1 = rmq(left(p), L, (L + R) / 2, i, j);
-        int p2 = rmq(right(p), (L + R) / 2 + 1, R, i, j);
-
-        if (p1 == -1) return p2;
-        if (p2 == -1) return p1;
-        return (A[p1] <= A[p2]) ? p1 : p2;
-    }
-
-    void update(int p, int L, int R, int i)
-    {
-        if (L == R) return;
-        if (i <= (L + R) / 2)
-            update(left(p), L, (L + R) / 2, i);
-        else
-            update(right(p), (L + R) / 2 + 1, R, i);
-
-        st[p] = A[st[right(p)]] <= A[st[left(p)]] ? st[right(p)] : st[left(p)];
-    }
-};
+    return res;
+}
