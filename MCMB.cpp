@@ -6,11 +6,10 @@
 // - G is the adjecency list of the graph.
 // - n and m are the numbers of vertices in the sets X and Y.
 // - M is the list of matches vertices.
-// - V is the list of visited vertices.
 // - MCBM is the number of matched pairs in a maximum cardinality bipartite matching.
 //
 // Functions:
-// - Aug(M, u) finds an augmenting path starting from the vertex u.
+// - Aug(u) finds an augmenting path starting from the vertex u.
 //
 // Note: The bipartite graph is directed from set X to set Y. If you start with an
 // undirected graph, the real MCBM will be half of the obtained value by the
@@ -27,25 +26,20 @@ using namespace std;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 
-int n, m;
+int n, m, tick;
 vi V, M;
 vvi G;
 
-int Aug(vi& M, int u)
+int Aug(int u)
 {
-    if (V[u])
+    if (V[u] == tick)
         return 0;
 
-    V[u] = true;
+    V[u] = tick;
     for (int v : G[u])
-    {
-        if (M[v] == -1 || Aug(M, M[v]))
-        {
-            M[v] = u;
-            return 1;
-        }
-    }
-    
+        if (M[v] == -1 || Aug(M[v]))
+            return M[v] = u, 1;
+            
     return 0;
 }
 
@@ -53,10 +47,8 @@ int main()
 {
     G.assign(n + m, vi());
     M.assign(n + m, -1);
+    V.assign(n, 0);
     int MCBM = 0;
     for (int i = 0; i < n; ++i)
-    {
-        V.assign(n, 0);
-        MCBM += Aug(M, i);
-    }
+        ++tick, MCBM += Aug(i);
 }
