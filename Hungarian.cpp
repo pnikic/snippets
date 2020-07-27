@@ -82,7 +82,7 @@ int main()
     ll cost = 0;
     for (int i = 0; i < n; ++i)
         cost += a[i][match[i] - n];
-    cout << -cost << '\n';
+    cout << cost << '\n';
     for (int i = 0; i < n; ++i)
         cout << match[i] - n << ' ';
 }
